@@ -10,7 +10,7 @@ function LoginPage(){
     const navigate = useNavigate()
 
     function handleLogin(){
-        console.log(email, password)
+
         axios.put(import.meta.env.VITE_BACKEND_URL + "/api/user/login", {
             email: email,
             password: password  
