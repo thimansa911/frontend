@@ -17,11 +17,11 @@ function LoginPage(){
         }).then(
             (response)=>{
                 toast.success("Login successful")
-                localStorage.setItem("token", response.data.token)
-                if(response.data.role == "admin"){
+                localStorage.setItem("token", response.data.Token)
+                if(response.data.role === "admin"){
                     navigate("/admin")
                 }else{
-                    if(response.data.role == "user"){
+                    if(response.data.role === "user"){
                         navigate("/")
                     }
                 }

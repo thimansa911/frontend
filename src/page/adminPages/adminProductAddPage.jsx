@@ -1,5 +1,8 @@
+import axios from "axios"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import toast from "react-hot-toast"
+import { Link, useNavigate } from "react-router-dom"
+import UploadFile from "../../utils/mediaUpload"
 
 function AdminProductAddPage(){
 
@@ -7,11 +10,28 @@ function AdminProductAddPage(){
     const [productName, setProductName] = useState("")
     const [productPrice, setProductPrice] = useState("")
     const [productLabelPrice, setProductLabelPrice] = useState("")
-    const [productPic, setProductPic] = useState("")
+    const [productPic, setProductPic] = useState([])
     const [productDescription, setProductDescription] = useState("")
     const [available, setAvailable] = useState("")
 
-    function HandleSubmit(){
+    const navigate = useNavigate()
+
+async function HandleSubmit(){
+
+    const PromisesArray = []
+
+    for(let i=0; i<productPic.length; i++){
+
+        const promise = UploadFile(productPic[i])
+        PromisesArray[i] = promise
+
+    }
+
+    const responses = await Promise.all(PromisesArray)
+    console.log(responses)
+
+    return;
+
         const productData = {
             productId: productId,
             productName: productName,
@@ -21,7 +41,31 @@ function AdminProductAddPage(){
             productDescription:productDescription,
             available: available
         }
-        console.log(productData)
+
+        const token = localStorage.getItem("token")
+        if(token == null){
+           return window.location.href = "/login";
+        } 
+
+        axios.post(import.meta.env.VITE_BACKEND_URL + "/api/product/create", productData,
+            {
+                headers:{
+                    Authorization:"Bearer " +token
+                }
+            }
+        ).then(
+            (res)=>{
+                toast.success("Product create successful")
+                navigate("/admin/product")
+                const response = res.data
+                console.log(response)
+            }
+        ).catch(
+            (error)=>{
+                toast.error("Failed to create product")
+                console.error("Error adding product:", error)
+            }
+        )
 
     }
 
@@ -33,7 +77,7 @@ function AdminProductAddPage(){
                 <input onChange={(e)=>{setProductName(e.target.value)}} type="text" placeholder="Product Name" className="border-2 border-black p-1"/>
                 <input onChange={(e)=>{setProductPrice(e.target.value)}} type="number" placeholder="Price" className="border-2 border-black p-1"/>
                 <input onChange={(e)=>{setProductLabelPrice(e.target.value)}} type="text" placeholder="Label Price" className="border-2 border-black p-1"/>
-                <input onChange={(e)=>{setProductPic(e.target.value)}} type="file" accept="image/*" placeholder="Images" className="border-2 border-black p-1"/>
+                <input onChange={(e)=>{setProductPic(e.target.files)}} type="file" multiple placeholder="Images" className="border-2 border-black p-1"/>
                 <textarea onChange={(e)=>{setProductDescription(e.target.value)}} type="text" placeholder="Description" className="w-100 border-2 border-black p-1"/>
                 <select onChange={(e)=>{setAvailable(e.target.value)}} className="border-2 border-black rounded-xl p-1 w-40">
                     <option >Is Available</option>
