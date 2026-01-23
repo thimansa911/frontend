@@ -28,16 +28,13 @@ async function HandleSubmit(){
     }
 
     const responses = await Promise.all(PromisesArray)
-    console.log(responses)
-
-    return;
 
         const productData = {
             productId: productId,
             productName: productName,
             productPrice: productPrice,
             productLabelPrice: productLabelPrice,
-            productPic: productPic,
+            productPic: responses,
             productDescription:productDescription,
             available: available
         }
