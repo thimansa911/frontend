@@ -7,6 +7,7 @@ import AdminStatusPage from "./adminStatusPage"
 import AdminOrderPage from "./adminOrderPage"
 import AdminPaymentReceiptPage from "./adminPaymentReceiptPage"
 import { Link } from "react-router-dom"
+import AdminUpdateProductPage from "./adminUpdateProduct"
 
 function AdminHomePage(){
     return(
@@ -28,6 +29,7 @@ function AdminHomePage(){
                     <Route path="/status" element={<AdminStatusPage/>}/>
                     <Route path="/order" element={<AdminOrderPage/>} />
                     <Route path="/payment" element={<AdminPaymentReceiptPage/>} />
+                    <Route path="/updateproduct/:productId" element={<AdminUpdateProductPage/>} />
                 </Routes>
             </div>
         </div>

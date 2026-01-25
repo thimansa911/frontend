@@ -6,27 +6,30 @@ import { useEffect } from "react";
 import { BiTrash } from "react-icons/bi";
 import { FaPen } from "react-icons/fa";
 import toast from "react-hot-toast";
+import LoaderFunction from "../../components/loader";
 
 function AdminProductPage(){
 
     const [products, setProduct] = useState([])
-    const [a, setA] = useState(0)
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(
         ()=>{
-            axios.get(import.meta.env.VITE_BACKEND_URL+"/api/product/get").then(
+            if(isLoading){
+              axios.get(import.meta.env.VITE_BACKEND_URL+"/api/product/get").then(
                 (res)=>{
                     setProduct(res.data)
+                    setIsLoading(false)
                 }
             )
         }
-        ,[a]
-    )
+    },[isLoading]
+)
     const navigate = useNavigate()
     return(
         <div className="w-full h-full">
 
-            <table>
+            {isLoading ? <LoaderFunction/> : <table>
                 <thead>
                     <tr>
                         <th className="p-6">Image</th>
@@ -40,16 +43,16 @@ function AdminProductPage(){
                 <tbody>
                 {
                   products.map(
-                    (products, index)=>{
+                    (product, index)=>{
                       return(
                         <tr key={index}>
                           <td className="p-6"> 
-                            <img src={products.productPic[0]} className="w-10 h-10 object-cover" />
+                            <img src={product.productPic[0]} className="w-10 h-10 object-cover" />
                           </td>
-                          <td className="p-6" >{products.productId}</td>
-                          <td className="p-6" >{products.productName}</td>
-                          <td className="p-6" >{products.productPrice}</td>
-                          <td className="p-6" >{products.productLabelPrice}</td>
+                          <td className="p-6" >{product.productId}</td>
+                          <td className="p-6" >{product.productName}</td>
+                          <td className="p-6" >{product.productPrice}</td>
+                          <td className="p-6" >{product.productLabelPrice}</td>
                           <td className="p-3 flex-wrap flex items-center gap-1 justify-center">
                             <BiTrash className="text-2xl p-1 bg-red-400 rounded-full active:translate-y-1 cursor-pointer" onClick={
                                 ()=>{
@@ -58,7 +61,7 @@ function AdminProductPage(){
                                         navigate("/login")
                                         return;
                                     }
-                                    axios.delete(import.meta.env.VITE_BACKEND_URL+"/api/product/delete/"+ products.productId,
+                                    axios.delete(import.meta.env.VITE_BACKEND_URL+"/api/product/delete/"+ product.productId,
                                         {
                                             headers:{
                                                 Authorization: `Bearer ${token}`
@@ -67,7 +70,7 @@ function AdminProductPage(){
                                     ).then(
                                         ()=>{
                                             toast.success("Product deleted successful");
-                                            setA(a+1);
+                                            setIsLoading(!isLoading)
                                         }
                                     ).catch(
                                         (error)=>{
@@ -77,7 +80,9 @@ function AdminProductPage(){
                                     )
                                 }
                             }/>
-                            <FaPen className="text-2xl p-1 bg-green-400 rounded-full active:translate-y-1 cursor-pointer"/>
+                            <FaPen onClick={()=>{
+                                navigate("/admin/updateproduct/"+product.productId)
+                            }} className="text-2xl p-1 bg-green-400 rounded-full active:translate-y-1 cursor-pointer"/>
                             </td>
                         </tr>
                       )
@@ -85,7 +90,7 @@ function AdminProductPage(){
                   )
                 }
                 </tbody>
-            </table>
+            </table>}
         
             <Link to="/admin/addproduct" className="text-4xl fixed bottom-3 right-3"><CgAdd/></Link>
         </div>
