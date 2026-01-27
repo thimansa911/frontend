@@ -13,12 +13,11 @@ function AdminUpdateProductPage(){
   const [available, setAvailable] = useState(true);
   const [oldPics, setOldPics] = useState([]);
   const [newPics, setNewPics] = useState([]);
-  const navigate = useNavigate()
-  const { productId } = useParams()
+  const navigate = useNavigate();
+  const { productId } = useParams();
 
     useEffect(() => {
-    axios
-      .get(import.meta.env.VITE_BACKEND_URL + "/api/product/info/" +productId,{
+    axios.get(import.meta.env.VITE_BACKEND_URL + "/api/product/info/" +productId,{
         headers:{
             Authorization:"Bearer "+localStorage.getItem("token")
         }

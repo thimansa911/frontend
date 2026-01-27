@@ -16,7 +16,11 @@ function AdminProductPage(){
     useEffect(
         ()=>{
             if(isLoading){
-              axios.get(import.meta.env.VITE_BACKEND_URL+"/api/product/get").then(
+              axios.get(import.meta.env.VITE_BACKEND_URL+"/api/product/get",{
+                headers:{
+                    Authorization:"Bearer "+localStorage.getItem("token")
+                }
+              }).then(
                 (res)=>{
                     setProduct(res.data)
                     setIsLoading(false)
