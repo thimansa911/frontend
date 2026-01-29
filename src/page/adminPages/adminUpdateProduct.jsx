@@ -93,7 +93,7 @@ function AdminUpdateProductPage(){
                 <input disabled value={productId} onChange={(e)=>{setProductId(e.target.value)}} type="text" className="border-2 border-black p-1"/>
                 <input placeholder="Name" value={productName} onChange={(e)=>{setProductName(e.target.value)}} type="text" className="border-2 border-black p-1"/>
                 <input placeholder="Price" value={productPrice} onChange={(e)=>{setProductPrice(e.target.value)}} type="number" className="border-2 border-black p-1"/>
-                <input placeholder="Label Price" value={productLabelPrice} onChange={(e)=>{setProductLabelPrice(e.target.value)}} type="text" className="border-2 border-black p-1"/>
+                <input placeholder="Label Price" value={productLabelPrice} onChange={(e)=>{setProductLabelPrice(e.target.value)}} type="number" className="border-2 border-black p-1"/>
                 <input onChange={(e)=>{setNewPics(e.target.files)}} type="file" multiple  className="border-2 border-black p-1"/>
                 <textarea placeholder="Description" value={productDescription} onChange={(e)=>{setProductDescription(e.target.value)}} type="text" className="w-100 border-2 border-black p-1"/>
                 <select value={available} onChange={(e)=>{setAvailable(e.target.value)}} className="border-2 border-black rounded-xl p-1 w-40">

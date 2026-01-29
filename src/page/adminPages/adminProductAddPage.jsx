@@ -73,7 +73,7 @@ async function HandleSubmit(){
                 <input onChange={(e)=>{setProductId(e.target.value)}} type="text" placeholder="Product Id" className="border-2 border-black p-1"/>
                 <input onChange={(e)=>{setProductName(e.target.value)}} type="text" placeholder="Product Name" className="border-2 border-black p-1"/>
                 <input onChange={(e)=>{setProductPrice(e.target.value)}} type="number" placeholder="Price" className="border-2 border-black p-1"/>
-                <input onChange={(e)=>{setProductLabelPrice(e.target.value)}} type="text" placeholder="Label Price" className="border-2 border-black p-1"/>
+                <input onChange={(e)=>{setProductLabelPrice(e.target.value)}} type="number" placeholder="Label Price" className="border-2 border-black p-1"/>
                 <input onChange={(e)=>{setProductPic(e.target.files)}} type="file" multiple placeholder="Images" className="border-2 border-black p-1"/>
                 <textarea onChange={(e)=>{setProductDescription(e.target.value)}} type="text" placeholder="Description" className="w-100 border-2 border-black p-1"/>
                 <select onChange={(e)=>{setAvailable(e.target.value)}} className="border-2 border-black rounded-xl p-1 w-40">

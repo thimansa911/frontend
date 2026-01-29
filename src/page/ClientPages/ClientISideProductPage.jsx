@@ -32,7 +32,7 @@ function ClientSideProductPage(){
     )
 
     return(
-    <div className="w-full h-full">
+    <div className="w-full bg-gray-100">
         {
             isLoading? <LoaderFunction/> : <div className="w-full h-full flex-wrap gap-6 justify-center ite flex">
                 {
