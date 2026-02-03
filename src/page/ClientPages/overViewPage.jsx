@@ -56,6 +56,10 @@ function ProductOverView(){
                                     <h1 className="text-2xl">LKR.{product.productLabelPrice}</h1>
                                 </div>
                             }
+                            <div className="p-1 w-full h-50 gap-2 flex">
+                                <button className="cursor-pointer rounded-2xl bg-blue-500 text-white hover:bg-white active:translate-y-1 hover:text-blue-500 hover:border-2 hover:border-blue-500 h-10 w-40">Add To Cart</button>
+                                <button className="cursor-pointer rounded-2xl bg-blue-400 text-white hover:bg-white active:translate-y-1 hover:text-blue-400 hover:border-2 hover:border-blue-400 h-10 w-40">Buy now</button>
+                            </div>
                             </div>
                     </div>
                 }
