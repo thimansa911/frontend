@@ -13,30 +13,46 @@ export function  GetCart(){
 export function AddToCart(product, qty){
     const cart = GetCart()
 
-    const exsistingProductIndex = cart.findIndex(()=>{
+    const existingProductIndex = cart.findIndex(
+        (item)=>{
+            
         return item.productId === product.productId
     })
 
-    if(exsistingProductIndex == -1){
+    if(existingProductIndex == -1){
         cart.push(
             {
                 productId: product.productId,
+                name:product.productName,
                 quantity : qty,
                 price: product.productPrice,
-                image:product.productPic
+                image:product.productPic[0]
             }
         )
         localStorage.setItem("cart", JSON.stringify(cart));
+
     }else{
-        const quantity = cart[exsistingProductIndex].quantity + qty;
+
+        const newQty = cart[existingProductIndex].quantity + qty;
+        
         if(newQty <= 0){
             const newCart = cart.filter((item, index)=>{
-                return index !== exsistingProductIndex;
+                return index !== existingProductIndex;
             })
             localStorage.setItem("cart",JSON.stringify(newCart));
         }else{
-            cart[exsistingProductIndex].quantity = newQty;
+            cart[existingProductIndex].quantity = newQty;
             localStorage.setItem("cart", JSON.stringify(cart));
         }
     }
+}
+
+export function GetTotal(){
+    const cart = GetCart();
+    let total = 0;
+    cart.forEach((item)=>{
+        total += item.price * item.quantity
+    })
+
+    return total
 }
